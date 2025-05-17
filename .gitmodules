@@ -1,0 +1,3 @@
+[submodule "main/device-ui"]
+	path = main/device-ui
+	url = https://github.com/meshtastic/device-ui.git

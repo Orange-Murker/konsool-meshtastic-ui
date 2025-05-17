@@ -25,7 +25,7 @@ install: flash
 # Preparation
 
 .PHONY: prepare
-prepare: sdk
+prepare: sdk getpypackages
 
 .PHONY: sdk
 sdk:
@@ -41,12 +41,17 @@ removesdk:
 	rm -rf "$(IDF_TOOLS_PATH)"
 
 .PHONY: refreshsdk
-refreshsdk: removesdk sdk
+refreshsdk: removesdk sdk getpypackages
+
+# Get the python packages required by nanopb
+.PHONY: getpypackages
+getpymodules:
+	source "$(IDF_PATH)/export.sh" >/dev/null && pip install protobuf grpcio-tools
 
 .PHONY: menuconfig
 menuconfig:
 	source "$(IDF_PATH)/export.sh" && idf.py menuconfig -DDEVICE=$(DEVICE)
-	
+
 # Cleaning
 
 .PHONY: clean
@@ -99,4 +104,3 @@ size-files:
 .PHONY: format
 format:
 	find main/ -iname '*.h' -o -iname '*.c' -o -iname '*.cpp' | xargs clang-format -i
-

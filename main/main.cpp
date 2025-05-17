@@ -1,4 +1,5 @@
 #include <stdio.h>
+extern "C" {
 #include "bsp/device.h"
 #include "bsp/display.h"
 #include "bsp/input.h"
@@ -13,6 +14,7 @@
 #include "nvs_flash.h"
 #include "widgets/label/lv_label.h"
 #include "widgets/textarea/lv_textarea.h"
+}
 
 // Constants
 static char const TAG[] = "main";
@@ -25,7 +27,7 @@ static size_t                       display_v_res        = 0;
 static lcd_color_rgb_pixel_format_t display_color_format;
 static QueueHandle_t                input_event_queue = NULL;
 
-void app_main(void) {
+extern "C" void app_main(void) {
     // Start the GPIO interrupt service
     gpio_install_isr_service(0);
 
