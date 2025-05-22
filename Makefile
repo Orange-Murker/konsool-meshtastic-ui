@@ -95,6 +95,19 @@ size:
 size-components:
 	source "$(IDF_PATH)/export.sh" && idf.py size-components
 
+.PHONY: partition-table
+partition-table:
+	source "$(IDF_PATH)/export.sh" && idf.py partition-table
+
+.PHONY: flash
+flash: build
+	source "$(IDF_PATH)/export.sh" && \
+	idf.py flash
+
+.PHONY: monitor
+monitor:
+	source "$(IDF_PATH)/export.sh" && idf.py monitor
+
 .PHONY: size-files
 size-files:
 	source "$(IDF_PATH)/export.sh" && idf.py size-files

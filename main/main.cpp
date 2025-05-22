@@ -15,6 +15,7 @@ extern "C" {
 #include "widgets/label/lv_label.h"
 #include "widgets/textarea/lv_textarea.h"
 }
+#include "Meshtastic.h"
 
 // Constants
 static char const TAG[] = "main";
@@ -73,5 +74,5 @@ extern "C" void app_main(void) {
 
     lvgl_unlock();
 
-    // You can add your main loop here
+    Meshtastic();
 }

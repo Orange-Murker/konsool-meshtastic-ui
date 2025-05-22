@@ -7,3 +7,4 @@ dependencies:
     git: https://github.com/Orange-Murker/lvgl.git
     version: badge
   espressif/libpng: "^1.6.39~1"
+  espressif/arduino-esp32: ^3.2.0
