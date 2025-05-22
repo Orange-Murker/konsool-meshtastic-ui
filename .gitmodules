@@ -1,3 +1,6 @@
+[submodule "components/SdFat/SdFat"]
+	path = components/SdFat/SdFat
+	url = https://github.com/greiman/SdFat.git
 [submodule "main/device-ui"]
 	path = main/device-ui
-	url = https://github.com/meshtastic/device-ui.git
+	url = https://github.com/Orange-Murker/device-ui.git
