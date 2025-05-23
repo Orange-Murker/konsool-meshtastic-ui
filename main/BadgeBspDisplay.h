@@ -8,8 +8,7 @@ class BadgeBspDisplay : public DisplayDriver {
    public:
     static BadgeBspDisplay& create();
     void                    init(DeviceGUI* gui) override;
-    virtual ~BadgeBspDisplay() {
-    }
+    void                    task_handler(void) override;
 
    private:
     BadgeBspDisplay(uint16_t width, uint16_t height);

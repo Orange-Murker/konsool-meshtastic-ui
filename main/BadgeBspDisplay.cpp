@@ -1,7 +1,7 @@
 #include "BadgeBspDisplay.h"
 extern "C" {
-#include "bsp/input.h"
 #include "bsp/display.h"
+#include "bsp/input.h"
 #include "bsp_lvgl.h"
 }
 #include "display/lv_display.h"
@@ -32,6 +32,12 @@ BadgeBspDisplay& BadgeBspDisplay::create() {
         res = bsp_display_get_parameters(&display_h_res, &display_v_res, &display_color_format);
         ESP_ERROR_CHECK(res);  // Check that the display parameters have been initialized
 
+        ESP_ERROR_CHECK(bsp_input_get_queue(&input_event_queue));
+
+        // Initialise LVGL
+        lvgl_init(display_h_res, display_v_res, display_color_format, display_lcd_panel, display_lcd_panel_io,
+                  input_event_queue);
+
         bsp_display = new BadgeBspDisplay(display_h_res, display_v_res);
     }
     return *bsp_display;
@@ -42,13 +48,9 @@ void BadgeBspDisplay::init(DeviceGUI* gui) {
     // Initialize LVGL
     DisplayDriver::init(gui);
 
-    ESP_ERROR_CHECK(bsp_input_get_queue(&input_event_queue));
-
-    // Initialise LVGL
-    lvgl_init(display_h_res, display_v_res, display_color_format, display_lcd_panel, display_lcd_panel_io,
-              input_event_queue);
-
     screenWidth  = display_h_res;
     screenHeight = display_v_res;
-    display = lv_display_get_default();
+    display      = lv_display_get_default();
 }
+
+void BadgeBspDisplay::task_handler(void) {};

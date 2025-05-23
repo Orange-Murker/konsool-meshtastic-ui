@@ -3,13 +3,13 @@
 #include "driver/uart.h"
 #include "esp_err.h"
 #include "esp_log.h"
-#include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "util/ILog.h"
+#include "hal/uart_types.h"
+#include "meshtastic/mesh.pb.h"
 
 #define BUF_SIZE (1024)
-const uart_port_t uart_num      = UART_NUM_1;
-uint8_t           buf[BUF_SIZE] = {0};
+static const uart_port_t uart_num      = UART_NUM_1;
+static uint8_t           buf[BUF_SIZE] = {0};
 
 static char const TAG[] = "EspClient";
 
@@ -26,15 +26,15 @@ void EspClient::init(void) {
 bool EspClient::connect(void) {
     ESP_LOGI(TAG, "Connecting...");
     uart_config_t uart_config = {
-        .baud_rate           = 115200,
+        .baud_rate           = 38400,
         .data_bits           = UART_DATA_8_BITS,
         .parity              = UART_PARITY_DISABLE,
         .stop_bits           = UART_STOP_BITS_1,
-        .flow_ctrl           = UART_HW_FLOWCTRL_CTS_RTS,
+        .flow_ctrl           = UART_HW_FLOWCTRL_DISABLE,
         .rx_flow_ctrl_thresh = 122,
     };
     ESP_ERROR_CHECK(uart_param_config(uart_num, &uart_config));
-    ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1, 4, 5, 18, 19));
+    ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1, 16, 18, -1, -1));
 
     int intr_alloc_flags = 0;
     ESP_ERROR_CHECK(uart_driver_install(uart_num, BUF_SIZE * 2, BUF_SIZE * 2, 0, NULL, intr_alloc_flags));
@@ -69,7 +69,7 @@ meshtastic_FromRadio EspClient::receive(void) {
     bool   valid = MeshEnvelope::validate(buf, length, payload_len);
 
     if (valid) {
-        MeshEnvelope envelope(buf, length);
+        MeshEnvelope         envelope(buf, length);
         meshtastic_FromRadio fromRadio = envelope.decode();
         MeshEnvelope::invalidate(buf, length, payload_len);
 

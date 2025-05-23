@@ -45,7 +45,7 @@ refreshsdk: removesdk sdk getpypackages
 
 # Get the python packages required by nanopb
 .PHONY: getpypackages
-getpymodules:
+getpypackages:
 	source "$(IDF_PATH)/export.sh" >/dev/null && pip install protobuf grpcio-tools
 
 .PHONY: menuconfig
@@ -85,6 +85,34 @@ checkbuildenv:
 build: checkbuildenv
 	source "$(IDF_PATH)/export.sh" >/dev/null && idf.py build -DDEVICE=$(DEVICE)
 
+# Hardware
+
+.PHONY: flash
+flash: build
+	source "$(IDF_PATH)/export.sh" && \
+	idf.py flash -p $(PORT)
+
+.PHONY: flashmonitor
+flashmonitor: build
+	source "$(IDF_PATH)/export.sh" && \
+	idf.py flash -p $(PORT) monitor
+
+.PHONY: erase
+erase:
+	source "$(IDF_PATH)/export.sh" && idf.py erase-flash -p $(PORT)
+
+.PHONY: monitor
+monitor:
+	source "$(IDF_PATH)/export.sh" && idf.py monitor -p $(PORT)
+
+.PHONY: openocd
+openocd:
+	source "$(IDF_PATH)/export.sh" && idf.py openocd
+
+.PHONY: gdb
+gdb:
+	source "$(IDF_PATH)/export.sh" && idf.py gdb
+
 # Tools
 
 .PHONY: size
@@ -98,15 +126,6 @@ size-components:
 .PHONY: partition-table
 partition-table:
 	source "$(IDF_PATH)/export.sh" && idf.py partition-table
-
-.PHONY: flash
-flash: build
-	source "$(IDF_PATH)/export.sh" && \
-	idf.py flash
-
-.PHONY: monitor
-monitor:
-	source "$(IDF_PATH)/export.sh" && idf.py monitor
 
 .PHONY: size-files
 size-files:

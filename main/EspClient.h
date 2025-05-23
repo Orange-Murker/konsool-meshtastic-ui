@@ -1,8 +1,6 @@
 #pragma once
 
 #include "comms/IClientBase.h"
-#include "comms/MeshEnvelope.h"
-#include "freertos/FreeRTOS.h"
 
 class EspClient : public IClientBase
 {
