@@ -41,7 +41,7 @@ idf_component_register(
 		${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_compile_definitions(HAS_TFT VIEW_320x240 DEBUG_UNIT_TEST)
+add_compile_definitions(ARCH_ESP32 HAS_TFT VIEW_320x240)
 
 target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
 
