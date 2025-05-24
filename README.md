@@ -1,9 +1,40 @@
-# Konsool LVGL Template App Project
+# Konsool Meshtasti UI Port
 
-This template project shows how to build an app for [Konsool](https://badge.team/docs/badges/konsool/) using the [LVGL](https://docs.lvgl.io/master/) library.
+## Usage
 
-## License
+- Use the buttons with *shapes* to navigate between the different pages in the UI
+- Use the arrow up and down keys to navigate
 
-The contents of this repository may be considered in the public domain or [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0) licensed at your disposal.
+## Building
 
-At Badge.Team we love open source so we recommend licensing your work based on this template under terms of the [MIT license](https://opensource.org/license/mit). The MIT license allows others to build upon your work without restrictions while also making sure you retain your attribution.
+```
+make prepare
+make build
+```
+
+## Flashing
+```
+make flash
+```
+
+## Features
+
+### Implemented
+
+- Full display support
+- Full keyboard support
+- Connecting to the C6 over serial
+- Battery level
+- Screen sleep
+- LittleFS persistent storage
+
+### Not Implemented Yet
+
+- P4 sleep
+- SD card support
+- Maps
+
+---
+
+
+Based on the [device-ui](https://github.com/meshtastic/device-ui/tree/master) library from meshtastic
