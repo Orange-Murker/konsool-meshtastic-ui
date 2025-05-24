@@ -12,7 +12,7 @@ static uint8_t           buf[BUF_SIZE] = {0};
 
 static char const TAG[] = "EspClient";
 
-EspClient::EspClient(void) {
+EspClient::EspClient(void) : SerialClient("esp_uart") {
 }
 
 void EspClient::init(void) {
@@ -35,14 +35,15 @@ bool EspClient::connect(void) {
     int intr_alloc_flags = 0;
     ESP_ERROR_CHECK(uart_driver_install(uart_num, BUF_SIZE * 2, BUF_SIZE * 2, 0, NULL, intr_alloc_flags));
 
-    connected = true;
-    return true;
+    setConnectionStatus(eConnected, "Connected!");
+    return clientStatus == eConnected;
 }
 
 bool EspClient::disconnect(void) {
     ESP_ERROR_CHECK(uart_driver_delete(uart_num));
-    connected = false;
-    return false;
+    ESP_LOGI(TAG, "Disconnected");
+    setConnectionStatus(eDisconnected, "Disconnected");
+    return SerialClient::disconnect();
 }
 
 bool EspClient::isConnected(void) {
