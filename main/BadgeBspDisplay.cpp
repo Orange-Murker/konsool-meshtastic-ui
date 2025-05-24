@@ -1,4 +1,5 @@
 #include "BadgeBspDisplay.h"
+#include "freertos/idf_additions.h"
 extern "C" {
 #include "bsp/display.h"
 #include "bsp/input.h"
@@ -21,7 +22,7 @@ BadgeBspDisplay* BadgeBspDisplay::bsp_display = NULL;
 BadgeBspDisplay::BadgeBspDisplay(uint16_t width, uint16_t height) : DisplayDriver(width, height) {
 }
 
-BadgeBspDisplay& BadgeBspDisplay::create() {
+BadgeBspDisplay& BadgeBspDisplay::create(QueueHandle_t input_event_queue) {
     if (!bsp_display) {
         esp_err_t res;
         // Fetch the handle for using the screen, this works even when
@@ -31,8 +32,6 @@ BadgeBspDisplay& BadgeBspDisplay::create() {
                                                           // display expose a panel IO handle
         res = bsp_display_get_parameters(&display_h_res, &display_v_res, &display_color_format);
         ESP_ERROR_CHECK(res);  // Check that the display parameters have been initialized
-
-        ESP_ERROR_CHECK(bsp_input_get_queue(&input_event_queue));
 
         // Initialise LVGL
         lvgl_init(display_h_res, display_v_res, display_color_format, display_lcd_panel, display_lcd_panel_io,

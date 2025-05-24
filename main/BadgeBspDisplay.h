@@ -6,7 +6,7 @@
 
 class BadgeBspDisplay : public DisplayDriver {
    public:
-    static BadgeBspDisplay& create();
+    static BadgeBspDisplay& create(QueueHandle_t input_event_queue);
     void                    init(DeviceGUI* gui) override;
     bool                    hasButton(void) override {
         return true;
