@@ -1,9 +1,9 @@
 #include "Meshtastic.h"
 #include <LittleFS.h>
-#include "freertos/task.h"
 #include "esp_log.h"
 #include "EspClient.h"
 #include "BadgeBspDisplay.h"
+#include "BadgeBspBatteryLevel.h"
 #include "input/InputDriver.h"
 #include "graphics/DeviceGUI.h"
 #include "graphics/driver/DisplayDriver.h"
@@ -19,6 +19,7 @@ static char const TAG[] = "MeshtasticMain";
 static TFTView_320x240* gui = NULL;
 static EspClient*       client;
 static DisplayDriver*   display;
+static BadgeBspBatteryLevel* bat;
 
 const char* firmware_version = "Tanmatsu Edition";
 
@@ -53,5 +54,7 @@ Meshtastic::Meshtastic() {
     gui->init(client);
     lvgl_unlock();
 
-    xTaskCreatePinnedToCore(task_handler, "meshtastic-gui", 10240, NULL, 1, NULL, 1);
+    bat = new BadgeBspBatteryLevel(gui);
+
+    xTaskCreatePinnedToCore(task_handler, "meshtastic-gui", 10240, NULL, 1, &task, 1);
 }

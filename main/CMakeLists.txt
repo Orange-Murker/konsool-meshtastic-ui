@@ -21,6 +21,7 @@ idf_component_register(
 		"BadgeBspDisplay.cpp"
 		"Meshtastic.cpp"
 		"EspClient.cpp"
+		"BadgeBspBatteryLevel.cpp"
 		${device-ui-src}
 		${nanopb-src}
 	PRIV_REQUIRES
