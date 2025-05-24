@@ -2,7 +2,7 @@ dependencies:
   idf:
     version: '>=5.3.0'
   badgeteam/badge-bsp: ^0.1.1
-  badgeteam/esp32-component-badge-bsp-lvgl: 0.1.0
+  badgeteam/esp32-component-badge-bsp-lvgl: 0.1.1
   lvgl:
     git: https://github.com/Orange-Murker/lvgl.git
     version: badge

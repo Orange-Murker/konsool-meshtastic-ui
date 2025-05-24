@@ -4,10 +4,12 @@
 #include "esp_log.h"
 #include "EspClient.h"
 #include "BadgeBspDisplay.h"
+#include "input/InputDriver.h"
 #include "graphics/DeviceGUI.h"
 #include "graphics/driver/DisplayDriver.h"
 #include "graphics/driver/DisplayDriverConfig.h"
 #include "graphics/view/TFT/TFTView_320x240.h"
+#include "misc/lv_types.h"
 extern "C" {
 #include "bsp_lvgl.h"
 }
@@ -43,6 +45,9 @@ Meshtastic::Meshtastic() {
     cfg.device(DisplayDriverConfig::device_t::CUSTOM_TFT);
 
     gui = TFTView_320x240::instance(cfg, display);
+
+    InputDriver* input_driver = gui->getInputDriver();
+    input_driver->setKeyboard(lvgl_get_indev());
 
     lvgl_lock();
     gui->init(client);
