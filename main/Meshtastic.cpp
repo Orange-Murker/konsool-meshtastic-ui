@@ -37,7 +37,7 @@ static QueueHandle_t button_indev_queue     = NULL;
 
 static lv_indev_t* button_indev = NULL;
 
-const char* firmware_version = "Tanmatsu Edition";
+const char* firmware_version = "Konsool/Tanmatsu Edition (v0.1.0)";
 
 // Point values for the buttons on the left size of the screen for a 480 pixel tall display
 const lv_point_t points_array[] = {{30, 20}, {30, 97}, {30, 174}, {30, 251}, {30, 328}, {30, 405}};
@@ -133,8 +133,6 @@ void run_meshtastic() {
         return;
     }
 
-    client  = new EspClient;
-
     lvgl_input_event_queue = xQueueCreate(32, sizeof(bsp_input_event_t));
     display = &BadgeBspDisplay::create(lvgl_input_event_queue);
     lvgl_set_navigation_mode(NAVIGATION_USE_ARROW_UP_DOWN);
@@ -146,6 +144,8 @@ void run_meshtastic() {
 
     InputDriver* input_driver = gui->getInputDriver();
     input_driver->setKeyboard(lvgl_get_indev());
+
+    client  = new EspClient;
 
     lvgl_lock();
     gui->init(client);

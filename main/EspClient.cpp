@@ -1,4 +1,5 @@
 #include "EspClient.h"
+#include <cstdio>
 #include "comms/SerialClient.h"
 #include "driver/uart.h"
 #include "esp_err.h"
@@ -11,6 +12,11 @@ static const uart_port_t uart_num      = UART_NUM_1;
 static uint8_t           buf[BUF_SIZE] = {0};
 
 static char const TAG[] = "EspClient";
+
+#define STATUS_BUF_LEN 64
+static char status_buf[STATUS_BUF_LEN] = {0};
+
+extern const char *firmware_version;
 
 EspClient::EspClient(void) : SerialClient("esp_uart") {
 }
@@ -35,7 +41,8 @@ bool EspClient::connect(void) {
     int intr_alloc_flags = 0;
     ESP_ERROR_CHECK(uart_driver_install(uart_num, BUF_SIZE * 2, BUF_SIZE * 2, 0, NULL, intr_alloc_flags));
 
-    setConnectionStatus(eConnected, "Connected!");
+    snprintf(status_buf, STATUS_BUF_LEN, "%s Connected!", firmware_version);
+    setConnectionStatus(eConnected, status_buf);
     return clientStatus == eConnected;
 }
 
