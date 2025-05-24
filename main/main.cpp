@@ -30,5 +30,5 @@ extern "C" void app_main(void) {
 
     ESP_LOGW(TAG, "Hello Meshtastic!");
 
-    Meshtastic();
+    run_meshtastic();
 }
