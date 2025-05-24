@@ -5,7 +5,7 @@
 #include "graphics/driver/DisplayDriver.h"
 
 constexpr uint32_t defaultScreenTimeout = 30 * 1000;
-constexpr uint32_t defaultBrightness    = 255;
+constexpr uint32_t defaultBrightness    = 153;
 
 class BadgeBspDisplay : public DisplayDriver {
    public:

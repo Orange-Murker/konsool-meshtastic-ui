@@ -133,9 +133,11 @@ void run_meshtastic() {
         return;
     }
 
+    client  = new EspClient;
+
     lvgl_input_event_queue = xQueueCreate(32, sizeof(bsp_input_event_t));
     display = &BadgeBspDisplay::create(lvgl_input_event_queue);
-    client  = new EspClient;
+    lvgl_set_navigation_mode(NAVIGATION_USE_ARROW_UP_DOWN);
 
     DisplayDriverConfig cfg = DisplayDriverConfig();
     cfg.device(DisplayDriverConfig::device_t::CUSTOM_TFT);
