@@ -135,6 +135,10 @@ size-components:
 partition-table:
 	source "$(IDF_PATH)/export.sh" && idf.py partition-table
 
+.PHONY: save-defconfig
+save-defconfig:
+	source "$(IDF_PATH)/export.sh" && idf.py save-defconfig
+
 .PHONY: size-files
 size-files:
 	source "$(IDF_PATH)/export.sh" && idf.py size-files

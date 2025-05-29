@@ -42,7 +42,7 @@ idf_component_register(
 		${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_compile_definitions(ARCH_ESP32 HAS_TFT VIEW_320x240)
+add_compile_definitions(ARCH_ESP32 HAS_TFT VIEW_320x240 USE_FFAT)
 
 target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
 
@@ -51,3 +51,5 @@ idf_component_get_property(libpng_lib espressif__libpng COMPONENT_LIB)
 target_link_libraries(${lvgl_lib} PUBLIC ${libpng_lib})
 
 target_link_libraries(${COMPONENT_LIB} PRIVATE Protobufs)
+
+fatfs_create_spiflash_image(locfd ../fat/ FLASH_IN_PROJECT)

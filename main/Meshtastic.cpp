@@ -1,9 +1,9 @@
 #include "Meshtastic.h"
-#include <LittleFS.h>
 #include <cstddef>
 #include "BadgeBspBatteryLevel.h"
 #include "BadgeBspDisplay.h"
 #include "EspClient.h"
+#include "FFat.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/idf_additions.h"
@@ -78,7 +78,7 @@ void button_read_cb(lv_indev_t* indev, lv_indev_data_t* data) {
 
 // Use hardware function buttons to emulate screen presses
 static void input_task(void* param) {
-    button_indev_queue     = xQueueCreate(32, sizeof(int));
+    button_indev_queue = xQueueCreate(32, sizeof(int));
 
     button_indev = lv_indev_create();
     lv_indev_set_type(button_indev, LV_INDEV_TYPE_BUTTON);
@@ -128,13 +128,13 @@ static void input_task(void* param) {
 void run_meshtastic() {
     ESP_ERROR_CHECK(bsp_input_get_queue(&input_event_queue));
 
-    if (!LittleFS.begin(true)) {
-        ESP_LOGE(TAG, "LittleFS Mount Failed");
+    if (!FFat.begin(false, "/ffat", 10, "locfd")) {
+        ESP_LOGE(TAG, "Failed to mount FAT filesystem");
         return;
     }
 
     lvgl_input_event_queue = xQueueCreate(32, sizeof(bsp_input_event_t));
-    display = &BadgeBspDisplay::create(lvgl_input_event_queue);
+    display                = &BadgeBspDisplay::create(lvgl_input_event_queue);
     lvgl_set_navigation_mode(NAVIGATION_USE_ARROW_UP_DOWN);
 
     DisplayDriverConfig cfg = DisplayDriverConfig();
@@ -145,7 +145,7 @@ void run_meshtastic() {
     InputDriver* input_driver = gui->getInputDriver();
     input_driver->setKeyboard(lvgl_get_indev());
 
-    client  = new EspClient;
+    client = new EspClient;
 
     lvgl_lock();
     gui->init(client);
