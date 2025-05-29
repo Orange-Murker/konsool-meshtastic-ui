@@ -25,7 +25,20 @@ install: flash
 # Preparation
 
 .PHONY: prepare
-prepare: sdk getpypackages
+prepare: submodules sdk getpypackages
+
+.PHONY: submodules
+submodules:
+	if [ ! -f .submodules_update_done ]; then \
+		echo "Updating submodules"; \
+		git submodule update --init --recursive; \
+		touch .submodules_update_done; \
+	fi
+
+# Get the python packages required by nanopb
+.PHONY: getpypackages
+getpypackages:
+	source "$(IDF_PATH)/export.sh" >/dev/null && pip install protobuf grpcio-tools
 
 .PHONY: sdk
 sdk:
@@ -42,11 +55,6 @@ removesdk:
 
 .PHONY: refreshsdk
 refreshsdk: removesdk sdk getpypackages
-
-# Get the python packages required by nanopb
-.PHONY: getpypackages
-getpypackages:
-	source "$(IDF_PATH)/export.sh" >/dev/null && pip install protobuf grpcio-tools
 
 .PHONY: menuconfig
 menuconfig:
