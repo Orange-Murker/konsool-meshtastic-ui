@@ -5,6 +5,7 @@
 #include "EspClient.h"
 #include "FFat.h"
 #include "esp_log.h"
+#include "esp_log_level.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/idf_additions.h"
 #include "freertos/task.h"
@@ -16,6 +17,8 @@
 #include "input/InputDriver.h"
 #include "misc/lv_types.h"
 #include "portmacro.h"
+#include "util/ILog.h"
+#include "EspLogger.h"
 extern "C" {
 #include "bsp/input.h"
 #include "bsp_lvgl.h"
@@ -126,6 +129,10 @@ static void input_task(void* param) {
 }
 
 void run_meshtastic() {
+    esp_log_level_set(UI_TAG, ESP_LOG_DEBUG);
+
+    new EspLogger();
+
     ESP_ERROR_CHECK(bsp_input_get_queue(&input_event_queue));
 
     if (!FFat.begin(false, "/ffat", 10, "locfd")) {

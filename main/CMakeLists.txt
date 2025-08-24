@@ -22,6 +22,7 @@ idf_component_register(
 		"Meshtastic.cpp"
 		"EspClient.cpp"
 		"BadgeBspBatteryLevel.cpp"
+		"EspLogger.cpp"
 		${device-ui-src}
 		${nanopb-src}
 	PRIV_REQUIRES
@@ -42,7 +43,7 @@ idf_component_register(
 		${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_compile_definitions(ARCH_ESP32 HAS_TFT VIEW_320x240 USE_FFAT)
+add_compile_definitions(ARCH_ESP32 HAS_TFT VIEW_320x240 USE_FFAT USE_ILOG)
 
 target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
 
