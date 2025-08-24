@@ -45,6 +45,8 @@ idf_component_register(
 
 add_compile_definitions(ARCH_ESP32 HAS_TFT VIEW_320x240 USE_FFAT USE_ILOG)
 
+add_compile_definitions(HAS_SDCARD HAS_SD_MMC SD_SCLK_PIN=43 SD_MOSI_PIN=44 SD_MISO_PIN=39)
+
 target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-format")
 
 idf_component_get_property(lvgl_lib lvgl COMPONENT_LIB)
