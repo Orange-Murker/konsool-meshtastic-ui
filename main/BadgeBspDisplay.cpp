@@ -38,7 +38,7 @@ BadgeBspDisplay& BadgeBspDisplay::create(QueueHandle_t input_event_queue) {
 
         // Initialise LVGL
         lvgl_init(display_h_res, display_v_res, display_color_format, display_lcd_panel, display_lcd_panel_io,
-                  input_event_queue);
+                  input_event_queue, 32 * 1024);
 
         bsp_display = new BadgeBspDisplay(display_h_res, display_v_res);
     }

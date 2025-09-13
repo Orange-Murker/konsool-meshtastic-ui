@@ -162,5 +162,5 @@ void run_meshtastic() {
 
     xTaskCreatePinnedToCore(meshtastic_task_handler, "meshtastic-gui", 10240, NULL, 1, &meshtastic_task_handle, 1);
 
-    xTaskCreatePinnedToCore(input_task, "input-task", 2048, NULL, 1, &input_task_handle, 0);
+    xTaskCreatePinnedToCore(input_task, "input-task", 4096, NULL, 1, &input_task_handle, 0);
 }

@@ -40,5 +40,5 @@ void BadgeBspBatteryLevel::battery_task(void* param) {
 
 BadgeBspBatteryLevel::BadgeBspBatteryLevel(TFTView_320x240* g) {
     BadgeBspBatteryLevel::gui = g;
-    xTaskCreatePinnedToCore(battery_task, "meshtastic-gui", 10240, NULL, 1, &task, 0);
+    xTaskCreatePinnedToCore(battery_task, "battery-task", 4096, NULL, 1, &task, 0);
 }
