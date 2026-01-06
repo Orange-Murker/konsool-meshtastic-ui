@@ -1,4 +1,4 @@
-# Konsool Meshtasti UI Port
+# Tanmatsu/Konsool Meshtastic UI Port
 
 ## Usage
 
@@ -37,4 +37,4 @@ make flash
 ---
 
 
-Based on the [device-ui](https://github.com/meshtastic/device-ui/tree/master) library from meshtastic
+Based on the [device-ui](https://github.com/meshtastic/device-ui/tree/master) library from Meshtastic
